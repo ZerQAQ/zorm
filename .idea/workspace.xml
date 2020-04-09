@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="53dd7dca-80d1-489b-88da-5705256e8818" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Go File" />
+      </list>
+    </option>
+  </component>
+  <component name="GOROOT" path="C:\Go" />
+  <component name="GoLibraries">
+    <option name="indexEntireGoPath" value="false" />
+  </component>
+  <component name="ProjectId" id="1aFzGwXYA0nACPcvGmtLGC0fryt" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DefaultGoTemplateProperty" value="Go File" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="go.import.settings.migrated" value="true" />
+    <property name="go.tried.to.enable.integration.vgo.integrator" value="true" />
+    <property name="last_opened_file_path" value="$USER_HOME$" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="F:\recent\orm\test" />
+      <recent name="F:\recent\orm" />
+      <recent name="F:\recent\orm\set" />
+    </key>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VgoProject">
+    <integration-enabled>true</integration-enabled>
+    <proxy>direct</proxy>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="648" y="235" key="#Go_Modules_(vgo)" timestamp="1586359979539">
+      <screen x="62" y="0" width="1986" height="1152" />
+    </state>
+    <state x="648" y="235" key="#Go_Modules_(vgo)/-1842.196.1842.1080/62.0.1986.1152@62.0.1986.1152" timestamp="1586359979539" />
+    <state x="837" y="323" key="FileChooserDialogImpl" timestamp="1586356920838">
+      <screen x="62" y="0" width="1986" height="1152" />
+    </state>
+    <state x="837" y="323" key="FileChooserDialogImpl/-1842.196.1842.1080/62.0.1986.1152@62.0.1986.1152" timestamp="1586356920838" />
+    <state x="156" y="389" key="SettingsEditor" timestamp="1586400146694">
+      <screen x="62" y="0" width="1090" height="2048" />
+    </state>
+    <state x="156" y="389" key="SettingsEditor/-1842.196.1842.1080/62.0.1090.2048@62.0.1090.2048" timestamp="1586400146694" />
+    <state x="557" y="219" key="SettingsEditor/-1842.196.1842.1080/62.0.1986.1152@62.0.1986.1152" timestamp="1586356928625" />
+    <state x="422" y="450" width="670" height="1206" key="search.everywhere.popup" timestamp="1586404650271">
+      <screen x="62" y="0" width="1090" height="2048" />
+    </state>
+    <state x="422" y="450" width="670" height="1206" key="search.everywhere.popup/-1842.196.1842.1080/62.0.1090.2048@62.0.1090.2048" timestamp="1586404650271" />
+    <state x="718" y="253" width="672" height="678" key="search.everywhere.popup/-1842.196.1842.1080/62.0.1986.1152@62.0.1986.1152" timestamp="1586398277994" />
+  </component>
+</project>
