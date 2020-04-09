@@ -1,14 +1,15 @@
-package orm
+package zorm
 
 import (
+	"fmt"
 	"log"
 	"orm/table"
 )
-
-func (d *Drive) initElm(t *table.Table, name string, rown int64,
+func (d *Driver) initElm(t *table.Table, name string,
+	rown int64, cmd string,
 	f func(*table.Table, []string))  {
 
-	rows, err := d.db.Query("desc " + name)
+	rows, err := d.db.Query(cmd)
 	if err != nil {panic(err)}
 
 	for rows.Next() {
@@ -25,28 +26,33 @@ func (d *Drive) initElm(t *table.Table, name string, rown int64,
 		var strval = make([]string, rown)
 		for i, elm := range val {
 			strval[i] = string(elm)
+			if rown == 6 {
+				fmt.Println(i, ":", strval[i])
+			}
 		}
 		f(t, strval)
-		t.Rows[strval[0]] = table.MakeRow(strval)
 	}
 }
 
-func (d *Drive) initRows(t *table.Table, name string) {
-	d.initElm(t, name, 6,
+func (d *Driver) initRows(t *table.Table, name string) {
+	d.initElm(t, name, 6, "desc " + name,
 		func(t *table.Table, s []string) {
 			t.Rows[s[0]] = table.MakeRow(s)
 		})
 }
 
-func (d *Drive) initIndex(t *table.Table, name string){
-	d.initElm(t, name, 15,
+func (d *Driver) initIndex(t *table.Table, name string){
+	d.initElm(t, name, 15, "show index from " + name,
 		func(t *table.Table, s []string) {
-			t.Indexs[s[0]] = table.MakeIndex(s)
+			ind := table.MakeIndex(s)
+			t.Indexs[ind.Name] = ind
 		})
 }
 
-func (d *Drive) makeTable (name string) table.Table {
+//将数据库中名字为name的表转化成Table对象
+func (d *Driver) makeTable (name string) table.Table {
 	var ret = table.Table{Name:name}
+	ret.Init()
 	d.initRows(&ret, name)
 	d.initIndex(&ret, name)
 	return ret

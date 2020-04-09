@@ -1,6 +1,5 @@
 package table
 
-
 type Row struct {
 	Name string
 	Type string
@@ -17,4 +16,12 @@ func MakeRow(s []string) Row {
 	if s[5] == "auto_increment" {ret.AutoIncrement = true
 	} else  {ret.AutoIncrement = false}
 	return ret
+}
+
+func CompareRow(a *Row, b *Row) bool {
+	if a.Name == b.Name && a.Type == b.Type &&
+		a.Pk == b.Pk && a.AutoIncrement == b.AutoIncrement &&
+		a.Null == b.Null && a.Default == b.Default{
+		return true
+	} else {return false}
 }

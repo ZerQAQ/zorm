@@ -1,40 +1,17 @@
-package orm
+package main
 
 import (
-	"database/sql"
-	"orm/set"
+	_ "github.com/go-sql-driver/mysql"
+	"orm/zorm"
 )
 
-type Drive struct {
-	db *sql.DB
-	tableSet *set.Set
+type user struct {
+	Id int64 `zorm:"pk unique auto_increment"`
+	Name string `zorm:"unique"`
+	Score int64
 }
 
-func (d *Drive) Connect (name string, sour string)  {
-	var err error
-	d.db, err = sql.Open(name, sour)
-	if err != nil {panic(err)}
-	d.initTables()
-}
-
-func (d *Drive) initTables (){
-	d.tableSet = set.MakeSet()
-	rows, err := d.db.Query("show tables")
-	if err != nil {
-		panic(err)
-	}
-
-	for rows.Next() {
-		var val interface{}
-
-		err := rows.Scan(&val)
-		if err != nil {panic(err)}
-
-		var strval = string(val.([]byte))
-		d.tableSet.Insert(strval)
-	}
-}
-
-func (d *Drive) Sync (s interface{}) {
-
+func main()  {
+	d := zorm.Open("mysql", "root:123456@/test?charset=utf8")
+	d.Sync(*new(user))
 }
