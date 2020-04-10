@@ -1,7 +1,6 @@
 package zorm
 
 import (
-	"fmt"
 	"log"
 	"orm/table"
 )
@@ -9,7 +8,7 @@ func (d *Driver) initElm(t *table.Table, name string,
 	rown int64, cmd string,
 	f func(*table.Table, []string))  {
 
-	rows, err := d.db.Query(cmd)
+	rows, err := d.Database.Query(cmd)
 	if err != nil {panic(err)}
 
 	for rows.Next() {
@@ -26,9 +25,6 @@ func (d *Driver) initElm(t *table.Table, name string,
 		var strval = make([]string, rown)
 		for i, elm := range val {
 			strval[i] = string(elm)
-			if rown == 6 {
-				fmt.Println(i, ":", strval[i])
-			}
 		}
 		f(t, strval)
 	}
@@ -37,7 +33,9 @@ func (d *Driver) initElm(t *table.Table, name string,
 func (d *Driver) initRows(t *table.Table, name string) {
 	d.initElm(t, name, 6, "desc " + name,
 		func(t *table.Table, s []string) {
-			t.Rows[s[0]] = table.MakeRow(s)
+			row := table.MakeRow(s)
+			t.Rows[row.Name] = row
+			t.RowsName = append(t.RowsName, row.Name)
 		})
 }
 
@@ -45,6 +43,9 @@ func (d *Driver) initIndex(t *table.Table, name string){
 	d.initElm(t, name, 15, "show index from " + name,
 		func(t *table.Table, s []string) {
 			ind := table.MakeIndex(s)
+			if t.Rows[ind.ColName].Pk {
+				ind.Name = "pk_" + ind.ColName
+			}
 			t.Indexs[ind.Name] = ind
 		})
 }

@@ -2,20 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="53dd7dca-80d1-489b-88da-5705256e8818" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/global/type.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/table/struct.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zorm/driver.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zorm/init.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zorm/readme.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/global/trans.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zorm/constraint.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zorm/get.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zorm/query.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/zorm/tb_operate.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/global/global.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/global/type.go" beforeDir="false" afterPath="$PROJECT_DIR$/global/type.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/table.go" beforeDir="false" afterPath="$PROJECT_DIR$/zorm/tb_parse.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/table/index.go" beforeDir="false" afterPath="$PROJECT_DIR$/table/index.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/set/set.go" beforeDir="false" afterPath="$PROJECT_DIR$/set/set.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/table/row.go" beforeDir="false" afterPath="$PROJECT_DIR$/table/row.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/table/struct.go" beforeDir="false" afterPath="$PROJECT_DIR$/table/struct.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/table/table.go" beforeDir="false" afterPath="$PROJECT_DIR$/table/table.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zorm/driver.go" beforeDir="false" afterPath="$PROJECT_DIR$/zorm/driver.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zorm/init.go" beforeDir="false" afterPath="$PROJECT_DIR$/zorm/init.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zorm/tb_parse.go" beforeDir="false" afterPath="$PROJECT_DIR$/zorm/tb_parse.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,16 +53,19 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="go.import.settings.migrated" value="true" />
     <property name="go.tried.to.enable.integration.vgo.integrator" value="true" />
-    <property name="last_opened_file_path" value="$USER_HOME$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/zorm" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\recent\orm\zorm" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="F:\recent\orm\zorm\table" />
       <recent name="F:\recent\orm\zorm" />
       <recent name="F:\recent\orm" />
+      <recent name="F:\recent\orm\zorm\table" />
       <recent name="F:\recent\orm\test" />
       <recent name="F:\recent\orm\set" />
     </key>
@@ -101,19 +105,19 @@
       <screen x="62" y="0" width="1986" height="1152" />
     </state>
     <state x="648" y="235" key="#Go_Modules_(vgo)/-1842.196.1842.1080/62.0.1986.1152@62.0.1986.1152" timestamp="1586359979539" />
-    <state x="837" y="323" key="FileChooserDialogImpl" timestamp="1586356920838">
+    <state x="837" y="323" key="FileChooserDialogImpl" timestamp="1586501337401">
       <screen x="62" y="0" width="1986" height="1152" />
     </state>
-    <state x="837" y="323" key="FileChooserDialogImpl/-1842.196.1842.1080/62.0.1986.1152@62.0.1986.1152" timestamp="1586356920838" />
+    <state x="837" y="323" key="FileChooserDialogImpl/-1842.196.1842.1080/62.0.1986.1152@62.0.1986.1152" timestamp="1586501337401" />
     <state x="156" y="389" key="SettingsEditor" timestamp="1586400146694">
       <screen x="62" y="0" width="1090" height="2048" />
     </state>
     <state x="156" y="389" key="SettingsEditor/-1842.196.1842.1080/62.0.1090.2048@62.0.1090.2048" timestamp="1586400146694" />
     <state x="557" y="219" key="SettingsEditor/-1842.196.1842.1080/62.0.1986.1152@62.0.1986.1152" timestamp="1586356928625" />
-    <state x="422" y="450" width="670" height="1206" key="search.everywhere.popup" timestamp="1586404650271">
-      <screen x="62" y="0" width="1090" height="2048" />
+    <state x="718" y="253" width="672" height="678" key="search.everywhere.popup" timestamp="1586534359459">
+      <screen x="62" y="0" width="1986" height="1152" />
     </state>
     <state x="422" y="450" width="670" height="1206" key="search.everywhere.popup/-1842.196.1842.1080/62.0.1090.2048@62.0.1090.2048" timestamp="1586404650271" />
-    <state x="718" y="253" width="672" height="678" key="search.everywhere.popup/-1842.196.1842.1080/62.0.1986.1152@62.0.1986.1152" timestamp="1586398277994" />
+    <state x="718" y="253" width="672" height="678" key="search.everywhere.popup/-1842.196.1842.1080/62.0.1986.1152@62.0.1986.1152" timestamp="1586534359459" />
   </component>
 </project>

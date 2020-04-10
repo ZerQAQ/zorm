@@ -1,7 +1,6 @@
 package table
 
 import (
-	"fmt"
 	"orm/global"
 	"orm/set"
 	"reflect"
@@ -9,7 +8,8 @@ import (
 )
 
 func lower(v uint8) uint8 {
-	return v - 'A' + 'a'
+	if 'A' <= v && v <= 'Z' { return v - 'A' + 'a'}
+	return v
 }
 
 func isLower(v uint8) bool {
@@ -36,15 +36,14 @@ func parseTag(s string) set.Set{
 	v := strings.Split(s, " ")
 	ret := set.MakeSet()
 	for _, i := range v {
-		fmt.Println(i)
 		ret.Insert(i)
 	}
 	return *ret
 }
 
 func parseInfoToRow(info reflect.StructField) Row {
-	row := Row{Name:parseName(info.Name), Pk:false,
-		AutoIncrement:false, Null:true,
+	row := Row{Name:parseName(info.Name), NameRaw:info.Name,
+		Pk:false, AutoIncrement:false, Null:true,
 		Default:""}
 
 	if info.Type == global.TypeInt ||
@@ -53,13 +52,16 @@ func parseInfoToRow(info reflect.StructField) Row {
 	} else if info.Type == global.TypeInt32 {
 		row.Type = "int"
 	} else if info.Type == global.TypeString {
-		row.Type = "varchar(100)"
+		row.Type = "varchar(256)"
 	} else {
 		row.Type = "undefined"
 	}
 
 	tag := parseTag(info.Tag.Get("zorm"))
 
+	if tp, ok := tag.Like("varchar"); ok{
+		row.Type = tp
+	}
 	if tag.Find("pk") {
 		row.Pk = true
 		row.Null = false
@@ -79,6 +81,9 @@ func parseInfoToIndex(info reflect.StructField,
 	if tag.Find("unique") || tag.Find("pk"){
 		index.Unique = true
 		index.Name = "unique_" + index.ColName
+		if tag.Find("pk") {
+			index.Name = "pk_" + index.ColName
+		}
 	} else {
 		index.Name = "index_" + index.ColName
 	}
@@ -96,12 +101,16 @@ func ParseStruct (s interface{}) Table {
 	for i := 0; i < t.NumField(); i++ {
 		info := t.Field(i)
 		tag := parseTag(info.Tag.Get("zorm"))
-		colName := parseName(info.Name)
+		rowName := parseName(info.Name)
 
-		ret.Rows[colName] = parseInfoToRow(info)
+		if tag.Find("ignore") {continue}
+
+		ret.Rows[rowName] = parseInfoToRow(info)
+		ret.RowsName = append(ret.RowsName, rowName)
+
 		if tag.Find("pk") || tag.Find("unique") ||
 			tag.Find("index") {
-			ind := parseInfoToIndex(info, colName)
+			ind := parseInfoToIndex(info, rowName)
 			ret.Indexs[ind.Name] = ind
 		}
 	}

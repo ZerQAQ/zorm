@@ -10,4 +10,4 @@ var TypeInt = reflect.TypeOf(*new(int))
 
 var TypeString = reflect.TypeOf(*new(string))
 
-var TypeBool = reflect.TypeOf(*new(bool))
+var TypePtr = reflect.Ptr

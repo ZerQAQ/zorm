@@ -1,6 +1,7 @@
 package table
 
 type Row struct {
+	NameRaw string
 	Name string
 	Type string
 	Pk bool

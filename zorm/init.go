@@ -3,18 +3,18 @@ package zorm
 import (
 	"database/sql"
 	"orm/set"
+	"orm/table"
 )
 
 func (d *Driver) Connect (name string, sour string)  {
 	var err error
-	d.db, err = sql.Open(name, sour)
+	d.Database, err = sql.Open(name, sour)
 	if err != nil {panic(err)}
-	d.initTables()
 }
 
-func (d *Driver) initTables (){
+func (d *Driver) init (){
 	d.tableSet = set.MakeSet()
-	rows, err := d.db.Query("show tables")
+	rows, err := d.Database.Query("show tables")
 	if err != nil {
 		panic(err)
 	}
@@ -28,4 +28,5 @@ func (d *Driver) initTables (){
 		var strval = string(val.([]byte))
 		d.tableSet.Insert(strval)
 	}
+	d.SyncTable = make(map[string]table.Table)
 }

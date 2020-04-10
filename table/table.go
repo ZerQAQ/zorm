@@ -2,6 +2,7 @@ package table
 
 type Table struct {
 	Name   string
+	RowsName []string
 	Rows   map[string]Row
 	Indexs map[string]Index
 }
@@ -9,6 +10,12 @@ type Table struct {
 func (t *Table) Init()  {
 	t.Rows = make(map[string]Row)
 	t.Indexs = make(map[string]Index)
+}
+
+func (t *Table) UpdateRowList (oth *Table)  {
+	for _, elm := range oth.Rows{
+		t.RowsName = append(t.RowsName, elm.Name)
+	}
 }
 
 func IsContain(a *Table, b *Table) bool {
