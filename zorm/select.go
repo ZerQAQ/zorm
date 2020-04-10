@@ -3,6 +3,7 @@ package zorm
 import (
 	"database/sql"
 	"errors"
+	"fmt"
 	"orm/global"
 	"reflect"
 	"strconv"
@@ -47,9 +48,13 @@ func (q *Query) Sync (ptr reflect.Value) {
 
 func (q *Query) Get (ptr interface{}) bool {
 
+	if reflect.TypeOf(ptr).Kind() != reflect.Ptr {panic("zorm: parameter send to Get must be pointer")}
+
 	q.Sync(reflect.ValueOf(ptr).Elem())
 
-	sql := "select * from " + q.table.Name + " where " + strings.Join(q.sqls, " and ") + " limit 1"
+	sql := "select * from " + q.table.Name
+	if len(q.sqls) > 0 {sql += " where " + strings.Join(q.sqls, " and ")}
+	sql += " limit 1"
 
 	//fmt.Println(sql, q.args)
 
@@ -79,7 +84,8 @@ func (q *Query) Find (sli interface{}) error {
 	if firval.Type().Kind() == reflect.Ptr {firval = firval.Elem()}
 	q.Sync(firval)
 
-	sql := "select * from " + q.table.Name + " where " + strings.Join(q.sqls, " and ")
+	sql := "select * from " + q.table.Name
+	if len(q.sqls) > 0 {sql += " where " + strings.Join(q.sqls, " and ")}
 	if q.limit > 0 {sql += " limit " + strconv.Itoa(int(q.limit))}
 	if q.offset >= 0 {sql += " offset " + strconv.Itoa(int(q.offset))}
 
@@ -102,4 +108,26 @@ func (q *Query) Find (sli interface{}) error {
 	}
 
 	return nil
+}
+
+func (q *Query) Count (ptr interface{}) int {
+	if reflect.TypeOf(ptr).Kind() != reflect.Ptr {panic("zorm: parameter send to Count must be pointer")}
+
+	q.Sync(reflect.ValueOf(ptr).Elem())
+
+	sql := "select * from " + q.table.Name
+	if len(q.sqls) > 0 {sql += " where " + strings.Join(q.sqls, " and ")}
+	if q.limit > 0 {sql += " limit " + strconv.Itoa(int(q.limit))}
+	if q.offset >= 0 {sql += " offset " + strconv.Itoa(int(q.offset))}
+	sql = "select count(*) from (" + sql + ") as t"
+	fmt.Println(sql)
+
+	res, err := q.driver.Database.Query(sql, q.args...)
+	if err != nil {panic(err)}
+
+	res.Next()
+	var num int
+	res.Scan(&num)
+
+	return num
 }

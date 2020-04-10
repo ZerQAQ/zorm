@@ -51,6 +51,12 @@ func (d *Driver) Sync (s interface{}) bool {
 	return true
 }
 
+func (d *Driver) Count (ptr interface{}) int {
+	q := new(Query)
+	q.Init(d)
+	return q.Count(ptr)
+}
+
 func (d *Driver) Where (cmd string, args ...interface{}) *Query {
 	q := new(Query)
 	q.Init(d)

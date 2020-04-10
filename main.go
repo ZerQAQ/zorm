@@ -22,4 +22,5 @@ func main()  {
 	t := make([]user, 1)
 	ok := d.Where("id != ?", -1).Find(&t)
 	fmt.Println(ok, t)
+	fmt.Println(d.Count(new(user)))
 }

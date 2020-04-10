@@ -15,6 +15,7 @@ func countNum (s string) int64 {
 }
 
 func (q *Query) Where (cmd string, args ...interface{}) *Query {
+	if cmd == "" {return q}
 	if countNum(cmd) != int64(len(args)) {
 		panic(errors.New("zorm: the number of '?' in query command should be equal to the args number"))
 	}
