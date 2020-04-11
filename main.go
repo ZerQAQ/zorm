@@ -17,10 +17,17 @@ func main()  {
 
 	t2 := user{}
 	d.Id(1).Get(&t2)
-	fmt.Println(t2)
-
+	//fmt.Println(t2)
+	/*
 	t := make([]user, 1)
 	ok := d.Where("id != ?", -1).Find(&t)
 	fmt.Println(ok, t)
 	fmt.Println(d.Count(new(user)))
+
+	 */
+	stus := make([]*user, 2)
+	stus[0] = &user{Name:"=v="}
+	stus[1] = &user{Name:"-w-"}
+	id, err := d.InsertMany(stus)
+	fmt.Println(id, err)
 }

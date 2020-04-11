@@ -14,3 +14,7 @@ func ParseInt64 (v interface{}) int64 {
 		return 0
 	}
 }
+
+func UnpackPtr(value reflect.Value) reflect.Value {
+	if value.Type().Kind() == reflect.Ptr {return value.Elem()} else{return value}
+}

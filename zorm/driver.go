@@ -51,20 +51,32 @@ func (d *Driver) Sync (s interface{}) bool {
 	return true
 }
 
+func (d *Driver) InsertMany (sli interface{}) (int64, error) {
+	q := new(Operation)
+	q.Init(d)
+	return q.insertMany(sli)
+}
+
+func (d *Driver) Insert (ptrs ...interface{}) (int64, error) {
+	q := new(Operation)
+	q.Init(d)
+	return q.insert(ptrs...)
+}
+
 func (d *Driver) Count (ptr interface{}) int {
-	q := new(Query)
+	q := new(Operation)
 	q.Init(d)
 	return q.Count(ptr)
 }
 
-func (d *Driver) Where (cmd string, args ...interface{}) *Query {
-	q := new(Query)
+func (d *Driver) Where (cmd string, args ...interface{}) *Operation {
+	q := new(Operation)
 	q.Init(d)
 	return q.Where(cmd, args...)
 }
 
-func (d *Driver) Id (id int64) *Query {
-	q := new(Query)
+func (d *Driver) Id (id int64) *Operation {
+	q := new(Operation)
 	q.Init(d)
 	return q.Id(id)
 }
