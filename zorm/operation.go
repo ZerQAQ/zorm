@@ -54,6 +54,7 @@ func (q *Operation) parseArgs() {
 		if reflect.TypeOf(q.args[p]).Kind() != reflect.Slice {
 			newSqlByte = append(newSqlByte, elm)
 			newArgs = append(newArgs, q.args[p])
+			p += 1
 			continue
 		}
 

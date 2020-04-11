@@ -12,25 +12,11 @@ type user struct {
 }
 
 func main()  {
-	d := zorm.Open("mysql", "root:123456@/test?charset=utf8")
+	d, _ := zorm.Open("mysql", "root:123456@/test?charset=utf8")
 	d.Sync(*new(user))
 
 	t2 := user{}
-	d.Id(1).Get(&t2)
-	//fmt.Println(t2)
-	/*
-	t := make([]user, 1)
-	ok := d.Where("id != ?", -1).Find(&t)
-	fmt.Println(ok, t)
-	fmt.Println(d.Count(new(user)))
 
-	stus := make([]*user, 2)
-	stus[0] = &user{Name:"=v="}
-	stus[1] = &user{Name:"-w-"}
-	id, err := d.InsertMany(stus)
-	fmt.Println(id, err)
-	*/
-
-	id, err := d.Where("id in (?)", 3, 4).Delete(new(user))
-	fmt.Println(id, err)
+	ok := d.Where("id < ?", 120).Where("name in (?)", []string{"zer", "rabbit"}).Get(&t2)
+	fmt.Println(ok, t2)
 }
