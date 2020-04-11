@@ -19,7 +19,7 @@ d, err:= zorm.Open("mysql", "userName:passWord@/dataBase?charset=utf8")
 
 通过向**Sync**传入一个结构体来同步表结构，如果表不存在zorm会创建一个新表。
 
-如果表已经存在zorm会尽量对表进行同步，若出现严重冲突（主键冲突， 列数据类型冲突等），会panic。
+如果表已经存在，zorm会尽量对表进行同步，若出现严重冲突（主键冲突， 列数据类型冲突等），会panic。
 
 ```go
 type user struct {
@@ -54,7 +54,7 @@ num, err := d.Where("id > ?", 20).Find(&result)
 // num是找到的数据条数
 
 num, err := d.Where("id not in (?)", []int64{10, 20}).Limit(5, 10).Find(&result)
-//你也可以通过Limit来设置查找的起点和总数限制，在这个语句中，查找的约束是从第五条开始，最多不超过10条数据
+//你也可以通过Limit来设置查找的起点和总数限制，在这个语句中，查找的约束是从第5条开始，最多不超过10条数据
 ```
 
 **Count** 方法，计算数据的条数。
