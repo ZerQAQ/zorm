@@ -3,7 +3,6 @@ package zorm
 import (
 	"database/sql"
 	"errors"
-	"fmt"
 	"github.com/ZerQAQ/zorm/global"
 	"reflect"
 )
@@ -26,10 +25,6 @@ func (q *Operation) parseStructToArgs(val reflect.Value) []interface{} {
 
 func (q *Operation) insertOne (val reflect.Value, cursor *sql.Tx) (sql.Result, error) {
 	q.Sync(val)
-	/*
-		解析args的时候可能会panic，添加defer保证回滚
-	 */
-	defer cursor.Rollback()
 
 	sql := "insert into " + q.table.Name + " value ("
 	for i, _ := range q.table.RowsName {
@@ -40,7 +35,6 @@ func (q *Operation) insertOne (val reflect.Value, cursor *sql.Tx) (sql.Result, e
 	sql += ")"
 
 	args := q.parseStructToArgs(val)
-	fmt.Println(sql, args)
 	return cursor.Exec(sql, args...)
 }
 

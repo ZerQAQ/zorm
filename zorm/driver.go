@@ -9,7 +9,7 @@ import (
 type Driver struct {
 	Database  *sql.DB
 	tableSet  *set.Set
-	SyncTable map[string]table.Table
+	syncTable map[string]table.Table
 }
 
 func Open(name string, sour string) (*Driver, error) {
@@ -66,7 +66,7 @@ func (d *Driver) Sync (s interface{}) bool {
 		}
 
 		if table.IsContain(&in, &tb){
-			d.SyncTable[in.Name] = in
+			d.syncTable[in.Name] = in
 			return true
 		}
 
@@ -83,7 +83,7 @@ func (d *Driver) Sync (s interface{}) bool {
 		d.createTable(&in)
 		//debug.Prt(&in)
 	}
-	d.SyncTable[in.Name] = in
+	d.syncTable[in.Name] = in
 	return true
 }
 

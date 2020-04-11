@@ -28,5 +28,5 @@ func (d *Driver) init (){
 		var strval = string(val.([]byte))
 		d.tableSet.Insert(strval)
 	}
-	d.SyncTable = make(map[string]table.Table)
+	d.syncTable = make(map[string]table.Table)
 }

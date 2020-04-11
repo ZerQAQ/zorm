@@ -34,12 +34,14 @@ func (q *Operation) Sync (ptr reflect.Value) {
 	typeInfo := ptr.Type()
 	if q.table != nil && q.table.Name == typeInfo.Name() {
 		return}
-	tb, ok := q.driver.SyncTable[typeInfo.Name()]
+	tb, ok := q.driver.syncTable[typeInfo.Name()]
 	if !ok {panic(errors.New("zorm: table relation is not sync"))}
 	q.table = &tb
 }
 
 func (q *Operation) parseArgs() {
+	if len(q.sqls) == 0 {return}
+
 	sqlByte := []byte(strings.Join(q.sqls, " and "))
 	newSqlByte := make([]byte, 0)
 	newArgs := make([]interface{}, 0)

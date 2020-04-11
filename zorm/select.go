@@ -21,16 +21,22 @@ func (q *Operation) parseRowToStruct (row *sql.Rows, ptr reflect.Value) {
 	err := row.Scan(argsPtr...)
 	if err != nil {panic(err)}
 
+	//fmt.Println(args)
+
 	obj := ptr
 
 	for i, rowName := range q.table.RowsName {
 		rowInfo := q.table.Rows[rowName]
 		field := obj.FieldByName(rowInfo.NameRaw)
 		if field.IsValid() {
-			tp := field.Type()
-			if tp == global.TypeInt32 || tp == global.TypeInt64 ||
-				tp == global.TypeInt {
-				field.SetInt(global.ParseInt64(args[i]))
+			if global.KindIsInt(field.Kind()){
+				// 两种情况，用Find的时候int会被Scan成[]byte
+				if global.KindIsInt(reflect.TypeOf(args[i]).Kind()) {
+					field.SetInt(global.ParseInt64(args[i]))
+				} else {
+					v, _ := strconv.Atoi(string(args[i].([]byte)))
+					field.SetInt(int64(v))
+				}
 			} else {
 				field.SetString(string(args[i].([]byte)))
 			}
@@ -89,7 +95,7 @@ func (q *Operation) Find (sli interface{}) (int64, error) {
 	if q.limit > 0 {sql += " limit " + strconv.Itoa(int(q.limit))}
 	if q.offset >= 0 {sql += " offset " + strconv.Itoa(int(q.offset))}
 
-	//fmt.Println(sql, q.args)
+	//fmt.Println(len(q.sqls), q.args)
 
 	res, err := q.driver.Database.Query(sql, q.args...)
 	/*
