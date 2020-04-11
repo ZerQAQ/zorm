@@ -12,12 +12,12 @@
 improt _ "github.com/go-sql-driver/mysql"
 ```
 
-可以通过Open来打开一个数据库
+可以通过**Open**来打开一个数据库
 ```go
 d, err:= zorm.Open("mysql", "userName:passWord@/dataBase?charset=utf8")
 ```
 
-通过向Sync传入一个结构体来同步表结构，如果表不存在zorm会创建一个新表。
+通过向**Sync**传入一个结构体来同步表结构，如果表不存在zorm会创建一个新表。
 
 如果表已经存在zorm会尽量对表进行同步，若出现严重冲突（主键冲突， 列数据类型冲突等），会panic。
 
