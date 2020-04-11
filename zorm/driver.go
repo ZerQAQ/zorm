@@ -2,8 +2,8 @@ package zorm
 
 import (
 	"database/sql"
-	"orm/set"
-	"orm/table"
+	"github.com/ZerQAQ/zorm/set"
+	"github.com/ZerQAQ/zorm/table"
 )
 
 type Driver struct {

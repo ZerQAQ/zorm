@@ -2,8 +2,8 @@ package zorm
 
 import (
 	"database/sql"
-	"orm/set"
-	"orm/table"
+	"github.com/ZerQAQ/zorm/set"
+	"github.com/ZerQAQ/zorm/table"
 )
 
 func (d *Driver) Connect (name string, sour string) error {

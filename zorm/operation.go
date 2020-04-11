@@ -2,9 +2,9 @@ package zorm
 
 import (
 	"errors"
-	"orm/global"
-	"orm/set"
-	"orm/table"
+	"github.com/ZerQAQ/zorm/global"
+	"github.com/ZerQAQ/zorm/set"
+	"github.com/ZerQAQ/zorm/table"
 	"reflect"
 	"strings"
 )

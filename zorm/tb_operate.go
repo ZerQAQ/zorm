@@ -2,7 +2,7 @@ package zorm
 
 import (
 	"fmt"
-	"orm/table"
+	"github.com/ZerQAQ/zorm/table"
 	"strings"
 )
 

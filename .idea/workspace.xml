@@ -2,7 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="53dd7dca-80d1-489b-88da-5705256e8818" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zorm/delete.go" beforeDir="false" afterPath="$PROJECT_DIR$/zorm/delete.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zorm/driver.go" beforeDir="false" afterPath="$PROJECT_DIR$/zorm/driver.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zorm/init.go" beforeDir="false" afterPath="$PROJECT_DIR$/zorm/init.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zorm/insert.go" beforeDir="false" afterPath="$PROJECT_DIR$/zorm/insert.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zorm/operation.go" beforeDir="false" afterPath="$PROJECT_DIR$/zorm/operation.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zorm/select.go" beforeDir="false" afterPath="$PROJECT_DIR$/zorm/select.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zorm/tb_operate.go" beforeDir="false" afterPath="$PROJECT_DIR$/zorm/tb_operate.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zorm/tb_parse.go" beforeDir="false" afterPath="$PROJECT_DIR$/zorm/tb_parse.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zorm/update.go" beforeDir="false" afterPath="$PROJECT_DIR$/zorm/update.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,7 +67,7 @@
   </component>
   <component name="RunManager">
     <configuration default="true" type="GoApplicationRunConfiguration" factoryName="Go Application">
-      <module name="orm" />
+      <module name="github.com/ZerQAQ/zorm" />
       <working_directory value="$PROJECT_DIR$/" />
       <go_parameters value="-i" />
       <kind value="FILE" />
@@ -68,7 +77,7 @@
       <method v="2" />
     </configuration>
     <configuration default="true" type="GoTestRunConfiguration" factoryName="Go Test">
-      <module name="orm" />
+      <module name="github.com/ZerQAQ/zorm" />
       <working_directory value="$PROJECT_DIR$/" />
       <go_parameters value="-i" />
       <framework value="gotest" />

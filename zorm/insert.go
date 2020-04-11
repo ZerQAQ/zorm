@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
-	"orm/global"
+	"github.com/ZerQAQ/zorm/global"
 	"reflect"
 )
 

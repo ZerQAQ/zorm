@@ -1,8 +1,8 @@
 package table
 
 import (
-	"orm/global"
-	"orm/set"
+	"github.com/ZerQAQ/zorm/global"
+	"github.com/ZerQAQ/zorm/set"
 	"reflect"
 	"strings"
 )

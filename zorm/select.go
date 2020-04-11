@@ -3,7 +3,7 @@ package zorm
 import (
 	"database/sql"
 	"errors"
-	"orm/global"
+	"github.com/ZerQAQ/zorm/global"
 	"reflect"
 	"strconv"
 	"strings"

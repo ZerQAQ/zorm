@@ -2,7 +2,7 @@ package zorm
 
 import (
 	"log"
-	"orm/table"
+	"github.com/ZerQAQ/zorm/table"
 )
 
 // 巧妙的做法

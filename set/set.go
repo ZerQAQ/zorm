@@ -5,7 +5,7 @@
 package set
 
 import (
-	"orm/global"
+	"github.com/ZerQAQ/zorm/global"
 	"reflect"
 	"strings"
 )
