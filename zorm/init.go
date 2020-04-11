@@ -6,10 +6,10 @@ import (
 	"orm/table"
 )
 
-func (d *Driver) Connect (name string, sour string)  {
+func (d *Driver) Connect (name string, sour string) error {
 	var err error
 	d.Database, err = sql.Open(name, sour)
-	if err != nil {panic(err)}
+	return err
 }
 
 func (d *Driver) init (){

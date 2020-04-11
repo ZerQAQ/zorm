@@ -4,8 +4,10 @@ import (
 	"log"
 	"orm/table"
 )
+
+// 巧妙的做法
 func (d *Driver) initElm(t *table.Table, name string,
-	rown int64, cmd string,
+	rowNum int64, cmd string,
 	f func(*table.Table, []string))  {
 
 	rows, err := d.Database.Query(cmd)
@@ -13,8 +15,8 @@ func (d *Driver) initElm(t *table.Table, name string,
 
 	for rows.Next() {
 		//构造ifs传入scan
-		var val = make([][]byte, rown)
-		var ifs = make([]interface{}, rown)
+		var val = make([][]byte, rowNum)
+		var ifs = make([]interface{}, rowNum)
 		for i := range val {
 			ifs[i] = &val[i]
 		}
@@ -22,11 +24,11 @@ func (d *Driver) initElm(t *table.Table, name string,
 		err := rows.Scan(ifs...)
 		if err != nil {log.Fatal(err)}
 
-		var strval = make([]string, rown)
+		var strVal = make([]string, rowNum)
 		for i, elm := range val {
-			strval[i] = string(elm)
+			strVal[i] = string(elm)
 		}
-		f(t, strval)
+		f(t, strVal)
 	}
 }
 

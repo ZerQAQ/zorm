@@ -12,11 +12,47 @@ type Driver struct {
 	SyncTable map[string]table.Table
 }
 
-func Open(name string, sour string) *Driver {
+func Open(name string, sour string) (*Driver, error) {
 	ret := new(Driver)
-	ret.Connect(name, sour)
+	err := ret.Connect(name, sour)
 	ret.init()
-	return ret
+	return ret, err
+}
+
+func (d *Driver) InsertMany (sli interface{}) (int64, error) {
+	q := new(Operation)
+	q.Init(d)
+	return q.insertMany(sli)
+}
+
+func (d *Driver) Col (ptrs ...string) *Operation {
+	q := new(Operation)
+	q.Init(d)
+	return q.Col(ptrs...)
+}
+
+func (d *Driver) Insert (ptrs ...interface{}) (int64, error) {
+	q := new(Operation)
+	q.Init(d)
+	return q.insert(ptrs...)
+}
+
+func (d *Driver) Count (ptr interface{}) (int64, error) {
+	q := new(Operation)
+	q.Init(d)
+	return q.Count(ptr)
+}
+
+func (d *Driver) Where (cmd string, args ...interface{}) *Operation {
+	q := new(Operation)
+	q.Init(d)
+	return q.Where(cmd, args...)
+}
+
+func (d *Driver) Id (id int64) *Operation {
+	q := new(Operation)
+	q.Init(d)
+	return q.Id(id)
 }
 
 func (d *Driver) Sync (s interface{}) bool {
@@ -51,32 +87,6 @@ func (d *Driver) Sync (s interface{}) bool {
 	return true
 }
 
-func (d *Driver) InsertMany (sli interface{}) (int64, error) {
-	q := new(Operation)
-	q.Init(d)
-	return q.insertMany(sli)
-}
-
-func (d *Driver) Insert (ptrs ...interface{}) (int64, error) {
-	q := new(Operation)
-	q.Init(d)
-	return q.insert(ptrs...)
-}
-
-func (d *Driver) Count (ptr interface{}) int {
-	q := new(Operation)
-	q.Init(d)
-	return q.Count(ptr)
-}
-
-func (d *Driver) Where (cmd string, args ...interface{}) *Operation {
-	q := new(Operation)
-	q.Init(d)
-	return q.Where(cmd, args...)
-}
-
-func (d *Driver) Id (id int64) *Operation {
-	q := new(Operation)
-	q.Init(d)
-	return q.Id(id)
-}
+/*
+Author: ZerQAQ
+ */

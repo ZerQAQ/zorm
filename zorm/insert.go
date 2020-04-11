@@ -15,8 +15,7 @@ func (q *Operation) parseStructToArgs(val reflect.Value) []interface{} {
 		field := val.FieldByName(rowNameRaw)
 		// struct中缺少某个表中的字段
 		if !field.IsValid() {panic(errors.New("zorm: the struct is not sync"))}
-		if field.Type().Kind() == reflect.Int || field.Type().Kind() == reflect.Int32 ||
-			field.Type().Kind() == reflect.Int64 {
+		if global.KindIsInt(field.Type().Kind()) {
 			args = append(args, field.Int())
 		} else if field.Type().Kind() == reflect.String {
 			args = append(args, field.String())

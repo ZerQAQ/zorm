@@ -39,3 +39,10 @@ func (q *Operation) Limit (offset int64, limit int64) *Operation {
 	q.limit = limit
 	return q
 }
+
+func (q *Operation) Col (colName ...string) *Operation {
+	for _, elm := range colName {
+		q.cols.Insert(elm)
+	}
+	return q
+}

@@ -2,6 +2,7 @@ package zorm
 
 import (
 	"database/sql"
+	"errors"
 	"orm/global"
 	"reflect"
 	"strconv"
@@ -40,8 +41,13 @@ func (q *Operation) parseRowToStruct (row *sql.Rows, ptr reflect.Value) {
 func (q *Operation) Get (ptr interface{}) bool {
 
 	if reflect.TypeOf(ptr).Kind() != reflect.Ptr {panic("zorm: parameter send to Get must be pointer")}
+	val := global.UnpackPtr(reflect.ValueOf(ptr))
 
-	q.Sync(reflect.ValueOf(ptr).Elem())
+	if val.Type().Kind() != reflect.Struct {panic(errors.New("zorm: parameter send to Get must be a struct pointer"))}
+
+	q.Sync(val)
+
+	q.parseArgs()
 
 	sql := "select * from " + q.table.Name
 	if len(q.sqls) > 0 {sql += " where " + strings.Join(q.sqls, " and ")}
@@ -54,26 +60,29 @@ func (q *Operation) Get (ptr interface{}) bool {
 	if err != nil {panic(err)}
 
 	if !res.Next() {return false}
-	q.parseRowToStruct(res, reflect.ValueOf(ptr).Elem())
+	q.parseRowToStruct(res, val)
 	return true
 }
 
 /*
 	Find返回多个数据，获得的数据个数不会超过slice的长度
  */
-func (q *Operation) Find (sli interface{}) error {
+func (q *Operation) Find (sli interface{}) (int64, error) {
 	if reflect.TypeOf(sli).Kind() != reflect.Ptr {panic("zorm: the parameter put into Find must be pointer")}
 	val := reflect.ValueOf(sli).Elem()
 	if val.Kind() != reflect.Slice {panic("zorm: the parameter put into Find must be slice pointer")}
 	//if int64(val.Len()) < q.limit {return errors.New("zorm: the len of slice must be greater than limit")}
 	sliceLen := int64(val.Len())
-	if sliceLen == 0 {return nil}
+	if sliceLen == 0 {return 0, nil}
 	// limit 取两者的最小值
 	if q.limit == -1 || sliceLen < q.limit {q.limit = sliceLen}
 
-	firval := val.Index(0)
-	if firval.Type().Kind() == reflect.Ptr {firval = firval.Elem()}
-	q.Sync(firval)
+	firVal := val.Index(0)
+	if firVal.Type().Kind() == reflect.Ptr {
+		firVal = firVal.Elem()}
+	q.Sync(firVal)
+
+	q.parseArgs()
 
 	sql := "select * from " + q.table.Name
 	if len(q.sqls) > 0 {sql += " where " + strings.Join(q.sqls, " and ")}
@@ -95,13 +104,13 @@ func (q *Operation) Find (sli interface{}) error {
 		if valElm.Type().Kind() == reflect.Ptr {valElm = valElm.Elem()}
 
 		q.parseRowToStruct(res, valElm)
-		if p >= sliceLen {return nil}
+		if p >= sliceLen {return sliceLen, nil}
 	}
 
-	return nil
+	return p, nil
 }
 
-func (q *Operation) Count (ptr interface{}) int {
+func (q *Operation) Count (ptr interface{}) (int64, error) {
 	if reflect.TypeOf(ptr).Kind() != reflect.Ptr {panic("zorm: parameter send to Count must be pointer")}
 
 	q.Sync(reflect.ValueOf(ptr).Elem())
@@ -112,12 +121,12 @@ func (q *Operation) Count (ptr interface{}) int {
 	if q.offset >= 0 {sql += " offset " + strconv.Itoa(int(q.offset))}
 	sql = "select count(*) from (" + sql + ") as t"
 
+	q.parseArgs()
 	res, err := q.driver.Database.Query(sql, q.args...)
-	if err != nil {panic(err)}
 
 	res.Next()
 	var num int
 	res.Scan(&num)
 
-	return num
+	return int64(num), err
 }
