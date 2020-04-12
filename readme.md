@@ -35,13 +35,13 @@ d.Sync(*new(user))
 
 **Get** 方法，传入一个struct指针，返回查询到的第一条数据
 
-返回值是一个bool，表示数据是否存在
+第一个返回值是一个bool，表示数据是否存在
 ```go
-ok := d.Id(20).Get(new(user))
+ok, err := d.Id(20).Get(new(user))
 
-ok := d.Where("id = ?", 10).Get(new(user))
+ok, err := d.Where("id = ?", 10).Get(new(user))
 
-ok := d.Where("id > ?", 120).Where("name in (?)", [2]string{"fox", "rabbit"}).Get(new(user))
+ok, err := d.Where("id > ?", 120).Where("name in (?)", [2]string{"fox", "rabbit"}).Get(new(user))
 //返回的是所有Where条件都被满足的数据中的第一个
 ```
 

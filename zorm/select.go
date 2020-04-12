@@ -44,7 +44,7 @@ func (q *Operation) parseRowToStruct (row *sql.Rows, ptr reflect.Value) {
 	}
 }
 
-func (q *Operation) Get (ptr interface{}) bool {
+func (q *Operation) Get (ptr interface{}) (bool, error) {
 
 	if reflect.TypeOf(ptr).Kind() != reflect.Ptr {panic("zorm: parameter send to Get must be pointer")}
 	val := global.UnpackPtr(reflect.ValueOf(ptr))
@@ -63,11 +63,11 @@ func (q *Operation) Get (ptr interface{}) bool {
 
 	res, err := q.driver.Database.Query(sql, q.args...)
 
-	if err != nil {panic(err)}
+	if err != nil {return false, err}
 
-	if !res.Next() {return false}
+	if !res.Next() {return false, nil}
 	q.parseRowToStruct(res, val)
-	return true
+	return true, nil
 }
 
 /*
