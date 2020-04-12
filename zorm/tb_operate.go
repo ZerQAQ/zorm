@@ -1,7 +1,6 @@
 package zorm
 
 import (
-	"fmt"
 	"github.com/ZerQAQ/zorm/table"
 	"strings"
 )
@@ -45,6 +44,6 @@ func (d *Driver) createTable (t *table.Table)  {
 		sql += "index(" + elm.ColName + ")"
 	}
 	sql += ")"
-	fmt.Println(sql)
+
 	d.Database.Exec(sql)
 }
