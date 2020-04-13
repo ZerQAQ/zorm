@@ -25,8 +25,8 @@ func (d *Driver) init (){
 		err := rows.Scan(&val)
 		if err != nil {panic(err)}
 
-		var strval = string(val.([]byte))
-		d.tableSet.Insert(strval)
+		var stringVal = string(val.([]byte))
+		d.tableSet.Insert(stringVal)
 	}
 	d.syncTable = make(map[string]table.Table)
 }

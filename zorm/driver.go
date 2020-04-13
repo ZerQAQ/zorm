@@ -2,8 +2,11 @@ package zorm
 
 import (
 	"database/sql"
+	"errors"
+	"github.com/ZerQAQ/zorm/global"
 	"github.com/ZerQAQ/zorm/set"
 	"github.com/ZerQAQ/zorm/table"
+	"reflect"
 )
 
 type Driver struct {
@@ -57,33 +60,35 @@ func (d *Driver) Id (id int64) *Operation {
 
 func (d *Driver) Sync (s interface{}) bool {
 	// in是用户输入的表结构，tb是数据库中已经存在的表结构
-	in := table.ParseStruct(s)
-	if d.tableSet.Find(in.Name) {
-		tb := d.makeTable(in.Name)
+	t := global.UnpackPtr(reflect.ValueOf(s)).Type()
 
-		if !table.IsContain(&tb, &in){
-			panic("Conflict, cant sync.")
+	if t.Kind() != reflect.Struct {panic(errors.New("zorm: the parameter send to Sync must be a struct or struct pointer"))}
+
+	tableStruct := table.ParseStruct(t)
+	if d.tableSet.Find(tableStruct.Name) {
+		databaseTable := d.makeTable(tableStruct.Name)
+
+		if !table.IsContain(&databaseTable, &tableStruct){
+			panic(errors.New("zorm: conflict happen cant sync"))
 		}
 
-		if table.IsContain(&in, &tb){
-			d.syncTable[in.Name] = in
+		if table.IsContain(&tableStruct, &databaseTable){
+			d.syncTable[tableStruct.Name] = tableStruct
 			return true
 		}
 
-		// in 和 tb 的差距
-		ad := table.Sub(&in, &tb)
-		//fmt.Println("altering")
-		in.RowsName = tb.RowsName
+		addition := table.Sub(&tableStruct, &databaseTable)
+		tableStruct.RowsName = databaseTable.RowsName
 
-		in.UpdateRowList(&ad)
-		d.alterTable(&ad)
+		tableStruct.UpdateRowList(&addition)
+		d.alterTable(&addition)
 		//debug.PrtTable(&ad)
 	} else {
 		//fmt.Println("Creating")
-		d.createTable(&in)
+		d.createTable(&tableStruct)
 		//debug.Prt(&in)
 	}
-	d.syncTable[in.Name] = in
+	d.syncTable[tableStruct.Name] = tableStruct
 	return true
 }
 

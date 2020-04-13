@@ -2,10 +2,11 @@ package zorm
 
 import (
 	"errors"
+	"github.com/ZerQAQ/zorm/global"
 )
 
 func countNum (s string) int64 {
-	bs := []byte(s)
+	bs := global.Str2bytes(s)
 	var ret int64
 	ret = 0
 	for _, elm := range bs{
@@ -24,8 +25,7 @@ func (q *Operation) Where (cmd string, args ...interface{}) *Operation {
 	addition += cmd
 	addition += " )"
 
-	q.sqls = append(q.sqls, addition)
-	q.args = append(q.args, args...)
+	q.appendSql(addition, args...)
 
 	return q
 }

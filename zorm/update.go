@@ -40,8 +40,6 @@ func (q *Operation) Update (ptr interface{}) (int64, error) {
 		fir = false
 	}
 
-	q.parseArgs()
-
 	args = append(args, q.args...)
 	sql := "update " + q.table.Name + " set " + subSql + " where " + strings.Join(q.sqls, " and ")
 

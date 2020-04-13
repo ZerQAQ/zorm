@@ -90,9 +90,8 @@ func parseInfoToIndex(info reflect.StructField,
 	return index
 }
 
-func ParseStruct (s interface{}) Table {
+func ParseStruct (t reflect.Type) Table {
 
-	t := reflect.TypeOf(s)
 	tableName := t.Name()
 
 	ret := Table{Name:tableName}

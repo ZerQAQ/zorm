@@ -15,9 +15,11 @@ func (q *Operation) Delete (ptr interface{}) (int64, error) {
 
 	q.Sync(val)
 
-	sql := "delete from " + q.table.Name + " where " + strings.Join(q.sqls, " and ")
+	sql := "delete from " + q.table.Name
+	if len(q.sqls) > 0 {
+		sql += " where " + strings.Join(q.sqls, " and ")
+	}
 
-	q.parseArgs()
 	res, err := q.driver.Database.Exec(sql, q.args...)
 	if err == nil{
 		id, err2 := res.RowsAffected()

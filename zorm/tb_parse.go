@@ -8,7 +8,7 @@ import (
 // 巧妙的做法
 func (d *Driver) initElm(t *table.Table, name string,
 	rowNum int64, cmd string,
-	f func(*table.Table, []string))  {
+	initTable func(*table.Table, []string))  {
 
 	rows, err := d.Database.Query(cmd)
 	if err != nil {panic(err)}
@@ -28,7 +28,7 @@ func (d *Driver) initElm(t *table.Table, name string,
 		for i, elm := range val {
 			strVal[i] = string(elm)
 		}
-		f(t, strVal)
+		initTable(t, strVal)
 	}
 }
 

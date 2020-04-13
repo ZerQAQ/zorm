@@ -28,10 +28,10 @@ func (d *Driver) alterTable (t *table.Table)  {
 
 func (d *Driver) createTable (t *table.Table)  {
 	sql := "create table " + t.Name + "("
-	f := false
+	notFir := false
 	for _, elm := range t.Rows{
-		if f {sql += ",\n"}
-		f = true
+		if notFir {sql += ",\n"}
+		notFir = true
 		sql += elm.Name + " " + elm.Type + " "
 		if elm.Pk {sql += " primary key "}
 		if !elm.Null {sql += " not null "}

@@ -46,14 +46,12 @@ func (q *Operation) parseRowToStruct (row *sql.Rows, ptr reflect.Value) {
 
 func (q *Operation) Get (ptr interface{}) (bool, error) {
 
-	if reflect.TypeOf(ptr).Kind() != reflect.Ptr {panic("zorm: parameter send to Get must be pointer")}
+	if reflect.TypeOf(ptr).Kind() != reflect.Ptr {panic(errors.New("zorm: parameter send to Get must be pointer"))}
 	val := global.UnpackPtr(reflect.ValueOf(ptr))
 
 	if val.Type().Kind() != reflect.Struct {panic(errors.New("zorm: parameter send to Get must be a struct pointer"))}
 
 	q.Sync(val)
-
-	q.parseArgs()
 
 	sql := "select * from " + q.table.Name
 	if len(q.sqls) > 0 {sql += " where " + strings.Join(q.sqls, " and ")}
@@ -88,14 +86,10 @@ func (q *Operation) Find (sli interface{}) (int64, error) {
 		firVal = firVal.Elem()}
 	q.Sync(firVal)
 
-	q.parseArgs()
-
 	sql := "select * from " + q.table.Name
 	if len(q.sqls) > 0 {sql += " where " + strings.Join(q.sqls, " and ")}
 	if q.limit > 0 {sql += " limit " + strconv.Itoa(int(q.limit))}
 	if q.offset >= 0 {sql += " offset " + strconv.Itoa(int(q.offset))}
-
-	//fmt.Println(len(q.sqls), q.args)
 
 	res, err := q.driver.Database.Query(sql, q.args...)
 	/*
@@ -127,7 +121,6 @@ func (q *Operation) Count (ptr interface{}) (int64, error) {
 	if q.offset >= 0 {sql += " offset " + strconv.Itoa(int(q.offset))}
 	sql = "select count(*) from (" + sql + ") as t"
 
-	q.parseArgs()
 	res, err := q.driver.Database.Query(sql, q.args...)
 
 	res.Next()
