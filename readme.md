@@ -6,10 +6,13 @@
 
 ### 连接与表同步
 
-在引入mysqlDriver之后
+在引入zorm和mysqlDriver之后
 
 ```go
-improt _ "github.com/go-sql-driver/mysql"
+improt (
+    _ "github.com/go-sql-driver/mysql"
+    "github.com/ZerQAQ/zorm/zorm"
+)
 ```
 
 可以通过**Open**来打开一个数据库
